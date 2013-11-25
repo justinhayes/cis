@@ -15,7 +15,7 @@ SOLR_COLLECTION=ciscollection
 
 ###HDFS
 #It's ok if this fails, which it will the first time this script is run
-sudo -u hdfs hadoop fs -rm -R /user/hive/warehouse/cis.db/records/*
+sudo -u hdfs hadoop fs -rm -R /user/hive/warehouse/cis.db/records
 
 
 ###Data dirs

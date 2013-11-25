@@ -1,13 +1,13 @@
 #https://wiki.cloudera.com/display/~mbrooks/Simple+Cloudera+Search+Example
 
 export CIS_HOME=/root/cis/
-export SOLR_CONFIG_HOME=$CIS_HOME/config/solrconf
+export SOLR_CONF_HOME=$CIS_HOME/conf/solrconf
 export SOLR_HOME=/opt/cloudera/parcels/SOLR/lib/solr
 
-solrctl --zk hadoop0:2181/solr instancedir --generate $SOLR_CONFIG_HOME
+solrctl --zk hadoop0:2181/solr instancedir --generate $SOLR_CONF_HOME
 
-#now update $SOLR_CONFIG_HOME/conf/schema.xml
+#now update $SOLR_CONF_HOME/conf/schema.xml
 
-cp $CIS_HOME/config/log4j.properties $SOLR_CONFIG_HOME
+cp $CIS_HOME/conf/log4j.properties $SOLR_CONF_HOME
 
 solrctl --zk hadoop0:2181/solr collection --create ciscollection

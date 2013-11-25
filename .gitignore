@@ -1,6 +1,11 @@
 target/
-package
+package/
+.classpath
+.project
+.settings
+.pydevproject
 *.class
 *.jar
 *.war
 *.ear
+src/main/scripts/data/.DS_Store

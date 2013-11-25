@@ -41,8 +41,12 @@ Getting Started
 To install the CIS, you must have a CDH cluster, with the above components (and their dependencies) all running
 and fully functional. Then, follow these steps:  
 
+NOTE: if running in the quickstart VM or any server that doesn't use the Oracle JDK by default, make sure that the JVM variable in 
+*/usr/lib/solr/bin/zkcli.sh* resolves to the Oracle JDK instead of the GNU jvm. 
+Do this by commenting out the existing **JVM="java"** line and adding **JVM=/usr/java/jdk1.6.0_32/bin/java** below it.
+
 1. Create a directory to install CIS to; this directory is referred to as $CIS_HOME (no need to create the env var though)
-    - Ensure that the paths in src/main/config/flumeconf/flume.conf and the scripts in src/main/scripts match the directory you just created
+    - Ensure that the paths in src/main/conf/flume/flume.conf and the scripts in src/main/scripts match the directory you just created
     - Ensure that the ZK_QUORUM property in src/main/scripts/install.sh and init-hadoop.sh is correct for your cluster
 2. Build the CIS jar file via: mvn clean install
 3. Copy the src directory and target/cis-0.0.1-SNAPSHOT.jar into a local directory called 'package', tar it, and copy it to the $CIS_HOME on the server
@@ -50,7 +54,7 @@ and fully functional. Then, follow these steps:
 5. Run the $CIS_HOME/package/src/main/scripts/install.sh script, which will:
     - Create required directories, all underneath $CIS_HOME
     - Copy the config files, scripts, and other files into the appropriate directories
-    - Initialize Cloudera Search and copy the Solr config files into the appropriate place under $CIS_HOME/solrconf
+    - Initialize Cloudera Search and copy the Solr config files into the appropriate place under $CIS_HOME/conf/solrconf
     - Create the Impala table and pre-create the required partitions
 
 
@@ -58,7 +62,7 @@ Running the Solution
 --------------------
 To run the application, ensure that all CDH services are operating normally and then enter the following commands, each in its own shell:
 ```
-    $> flume-ng agent -c $CIS_HOME/config/flumeconf -f $CIS_HOME/config/flumeconf/flume.conf -n cis
+    $> flume-ng agent -c $CIS_HOME/conf/flume -f $CIS_HOME/conf/flume/flume.conf -n cis
     $> python $CIS_HOME/scripts/datadriver.py -yhttpd -t100
 ```
 

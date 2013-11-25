@@ -115,8 +115,8 @@ def isvalidhttpd(line):
 httpdtemplates = []
 if type=='httpd':
     #nasa_access_log for non-normalized version if you are going to normalize it now
-    httpdsamplefile = 'nasa_access_log_norm'
-    #httpdsamplefile = 'nasa_access_log'
+    httpdsamplefile = 'data/nasa_access_log_norm'
+    #httpdsamplefile = 'data/nasa_access_log'
 
     with open(httpdsamplefile) as httpdfile:
         httpdtemplates = httpdfile.read().splitlines()
@@ -146,7 +146,7 @@ if type=='iptables':
 kddtemplates = []
 if type=='kdd':
     #can be kddcup.testdata.unlabeled or kddcup.testdata.unlabeled_10_percent
-    kddsamplefile = 'kddcup.testdata.unlabeled'
+    kddsamplefile = 'data/kddcup.testdata.unlabeled'
     with open(kddsamplefile) as kddfile:
         kddtemplates = kddfile.read().splitlines()
     print 'Loaded', len(kddtemplates), 'kdd lines from', kddsamplefile

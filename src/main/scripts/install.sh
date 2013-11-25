@@ -12,9 +12,9 @@ ZK_QUORUM=hadoop0:2181
 ###Initial environment setup
 mkdir -p $CIS_HOME/conf
 mkdir -p $CIS_HOME/bin
-cp -R $CIS_HOME/package/src/main/conf/flumeconf $CIS_HOME/conf/
+cp -R $CIS_HOME/package/src/main/conf/flume $CIS_HOME/conf/
 cp -R $CIS_HOME/package/src/main/conf/impala $CIS_HOME/conf/
-cp -R $CIS_HOME/package/cis-0.0.1-SNAPSHOT.jar $CIS_HOME/conf/flumeconf
+cp -R $CIS_HOME/package/cis-0.0.1-SNAPSHOT.jar $CIS_HOME/conf/flume
 cp -R $CIS_HOME/package/src/main/scripts/* $CIS_HOME/bin
 
 
