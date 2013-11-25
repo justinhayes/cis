@@ -18,12 +18,12 @@ The core components of the solution are as follows:
 - ZoomData
 - Apache Hue
 
-At a high level, the flow of data through the system is as follows:
+At a high level, the flow of data through the system is as follows:  
 1. Data arrives as log files in a log directory (the datadriver.py script populates these log files with synthetic data)
 2. A Flume agent reads the log file data, parses it, normalizes it, and 
-- writes it to HDFS, and 
-- indexes it in Cloudera Search, and
-- sends it to the machine learning component [TBD]
+    - writes it to HDFS, and 
+    - indexes it in Cloudera Search, and
+    - sends it to the machine learning component [TBD]
 3. A partitioned Impala table is defined over the HDFS data, enabling SQL querying
 4. Cloudera Search provides search on the indexed event data
 5. The machine learning component uses the event data to update its model(s) determine if it is anomalous [TBD]
