@@ -1,0 +1,34 @@
+-----------------------------------------
+--This must be done in impala
+
+CREATE DATABASE cis;
+
+USE cis;
+
+CREATE TABLE records 
+(ts TIMESTAMP, raw STRING, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING)
+PARTITIONED BY (hour BIGINT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE;
+
+-----------------------------------------If doing multiple formats in different partitions-----------------------------------------
+--This must be done in impala
+
+CREATE DATABASE cis;
+
+USE cis;
+
+--had to copy parquet-mr and parquet-format jars to hive lib dir as per https://issues.cloudera.org/browse/IMPALA-574
+--have to change ts to BIGINT instead of TIMESTAMP because the parquet-hive-1.2.2.jar file can't handle the timestamp data type
+CREATE TABLE records 
+(ts TIMESTAMP, raw STRING, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING)
+PARTITIONED BY (year INT, month INT, day INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+STORED AS SEQUENCEFILE;
+
+--STORED AS PARQUETFILE;
+--LOCATION '/user/hive/cis/records';
+
+-----------------------------------------
+--This must be done in hive
+ALTER TABLE records PARTITION (year=0, month=0, day=0) SET FILEFORMAT SEQUENCEFILE;
