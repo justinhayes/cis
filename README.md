@@ -8,6 +8,7 @@ together into a system that can be used for InfoSec use cases. It provides the f
 - Machine Learning for Anomaly Detection
 - Near Real Time Flagging of Anomalies
 
+---
 
 The core components of the solution are as follows:
 - Apache HDFS
@@ -19,6 +20,7 @@ The core components of the solution are as follows:
 - ZoomData
 - Apache Hue
 
+---
 
 At a high level, the flow of data through the system is as follows:
 
@@ -50,7 +52,6 @@ and fully functional. Then, follow these steps:
     b. Copy the config files, scripts, and other files into the appropriate directories
     c. Initialize Cloudera Search and copy the Solr config files into the appropriate place under $CIS_HOME/solrconf
     d. Create the Impala table and pre-create the required partitions
-
 
 
 Running the Solution
