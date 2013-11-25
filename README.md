@@ -8,6 +8,7 @@ together into a system that can be used for InfoSec use cases. It provides the f
 - Machine Learning for Anomaly Detection
 - Near Real Time Flagging of Anomalies
 
+
 The core components of the solution are as follows:
 - Apache HDFS
 - Apache YARN
@@ -17,6 +18,7 @@ The core components of the solution are as follows:
 - Cloudera Oryx
 - ZoomData
 - Apache Hue
+
 
 At a high level, the flow of data through the system is as follows:
 
@@ -36,9 +38,10 @@ Getting Started
 ---------------
 To install the CIS, you must have a CDH cluster, with the above components (and their dependencies) all running
 and fully functional. Then, follow these steps:
+
 1. Create a directory to install CIS to; this directory is referred to as $CIS_HOME (no need to create the env var though)
-- Ensure that the paths in src/main/config/flumeconf/flume.conf and the scripts in src/main/scripts match the directory you just created
-- Ensure that the ZK_QUORUM property in src/main/scripts/install.sh and init-hadoop.sh is correct for your cluster
+    - Ensure that the paths in src/main/config/flumeconf/flume.conf and the scripts in src/main/scripts match the directory you just created
+    - Ensure that the ZK_QUORUM property in src/main/scripts/install.sh and init-hadoop.sh is correct for your cluster
 2. Build the CIS jar file via: mvn clean install
 3. Copy the src directory and target/cis-0.0.1-SNAPSHOT.jar into a local directory called 'package', tar it, and copy it to the $CIS_HOME on the server
 4. Untar the package tar file in the $CIS_HOME directory 
