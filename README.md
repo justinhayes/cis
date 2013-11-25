@@ -1,7 +1,7 @@
 Introduction
 ===========
 The Cloudera InfoSec Solution (CIS) is a reference architecture for integrating several Hadoop ecosystem components
-together into a system that can be used for InfoSec use cases. It provides the following high level features:  
+together into a system that can be used for InfoSec use cases. It provides the following high level features:
 - Low latency SQL
 - Search
 - Streaming and Historical Visualizations
@@ -18,7 +18,8 @@ The core components of the solution are as follows:
 - ZoomData
 - Apache Hue
 
-At a high level, the flow of data through the system is as follows:  
+At a high level, the flow of data through the system is as follows:
+
 1. Data arrives as log files in a log directory (the datadriver.py script populates these log files with synthetic data)
 2. A Flume agent reads the log file data, parses it, normalizes it, and 
     - writes it to HDFS, and 
