@@ -37,7 +37,7 @@ At a high level, the flow of data through the system is as follows:
 Getting Started
 ---------------
 To install the CIS, you must have a CDH cluster, with the above components (and their dependencies) all running
-and fully functional. Then, follow these steps:
+and fully functional. Then, follow these steps:  
 
 1. Create a directory to install CIS to; this directory is referred to as $CIS_HOME (no need to create the env var though)
     - Ensure that the paths in src/main/config/flumeconf/flume.conf and the scripts in src/main/scripts match the directory you just created
