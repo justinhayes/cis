@@ -48,10 +48,10 @@ and fully functional. Then, follow these steps:
 3. Copy the src directory and target/cis-0.0.1-SNAPSHOT.jar into a local directory called 'package', tar it, and copy it to the $CIS_HOME on the server
 4. Untar the package tar file in the $CIS_HOME directory 
 5. Run the $CIS_HOME/package/src/main/scripts/install.sh script, which will:
-    a. Create required directories, all underneath $CIS_HOME
-    b. Copy the config files, scripts, and other files into the appropriate directories
-    c. Initialize Cloudera Search and copy the Solr config files into the appropriate place under $CIS_HOME/solrconf
-    d. Create the Impala table and pre-create the required partitions
+    - Create required directories, all underneath $CIS_HOME
+    - Copy the config files, scripts, and other files into the appropriate directories
+    - Initialize Cloudera Search and copy the Solr config files into the appropriate place under $CIS_HOME/solrconf
+    - Create the Impala table and pre-create the required partitions
 
 
 Running the Solution
