@@ -83,6 +83,7 @@ public class HeaderTextEventSerializer implements EventSerializer {
 				out.write('\n');
 			}
 		} else {
+			//TODO prob want a better way to handle this than using a record2 field (which must be added at the end of the morphline if the event is invalid)
 			logger.warn("Event " + e + " did not contain a '" + HEADER_KEY + "' header, so no data serialized.");
 			logger.warn("Invalid record: " + e.getHeaders().get("record2"));
 		}

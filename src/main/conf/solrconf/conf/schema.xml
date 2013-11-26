@@ -100,6 +100,8 @@
    -->
    
    <field name="id" type="string" indexed="true" stored="true"/>
+   <field name="ts" type="date" indexed="true" stored="true"/>
+   <field name="eventts" type="date" indexed="true" stored="true"/>
    <field name="type" type="string" indexed="true" stored="true"/>
    <field name="verb" type="string" indexed="true" stored="true"/>
    <field name="resource" type="string" indexed="true" stored="true"/>

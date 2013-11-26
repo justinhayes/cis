@@ -73,4 +73,15 @@ Once these processes are running, you can run Impala queries and Solr searches v
 view the ZoomData visualizations at http://<host>:????.
 
  
+ZoomData Configuration
+----------------------
+If using the ZoomData quickstart VM, you must install NTP to make sure that the clock is synchronized to the CDH cluster and that it uses US/Pacific timezone.
+The *zoomdata* account has sudo permissions and its password is *zoomdata*.
 
+```
+    $> sudo ln -s /usr/share/zoneinfo/US/Pacific /etc/localtime
+    $> sudo yum -y install ntp
+    $> sudo chkconfig ntpd on
+    $> sudo ntpdate pool.ntp.org
+    $> sudo /etc/init.d/ntpd start
+```

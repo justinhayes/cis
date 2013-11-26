@@ -16,6 +16,8 @@ cp -R $CIS_HOME/package/src/main/conf/flume $CIS_HOME/conf/
 cp -R $CIS_HOME/package/src/main/conf/impala $CIS_HOME/conf/
 cp -R $CIS_HOME/package/cis-0.0.1-SNAPSHOT.jar $CIS_HOME/conf/flume
 cp -R $CIS_HOME/package/src/main/scripts/* $CIS_HOME/bin
+gunzip $CIS_HOME/bin/data/kddcup.testdata.unlabeled.gz
+gunzip $CIS_HOME/bin/data/nasa_access_log_norm.gz
 
 
 ###Initial search setup
