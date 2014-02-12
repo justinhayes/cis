@@ -9,3 +9,4 @@ package/
 *.war
 *.ear
 src/main/scripts/data/.DS_Store
+data/.DS_Store
