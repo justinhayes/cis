@@ -28,10 +28,10 @@ At a high level, the flow of data through the system is as follows:
 2. A Flume agent reads the log file data, parses it, normalizes it, and 
     - writes it to HDFS, and 
     - indexes it in Cloudera Search, and
-    - sends it to the machine learning component [TBD]
+    - queries the Oryx serving layer to determine if this event represents an anomaly
 3. A partitioned Impala table is defined over the HDFS data, enabling SQL querying
 4. Cloudera Search provides search on the indexed event data
-5. The machine learning component uses the event data to update its model(s) determine if it is anomalous [TBD]
+5. Oryx uses the event data to periodically update its model [TBD]
 6. ZoomData provides historical and streaming visualization of the data via Cloudera Impala and Search [TBD]
 7. ZoomData provides near real time alerting of events flagged as anomalous [TBD]
 
