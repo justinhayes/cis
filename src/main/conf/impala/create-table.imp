@@ -5,7 +5,7 @@ USE cis;
 DROP TABLE IF EXISTS records;
 
 CREATE TABLE records 
-(ts TIMESTAMP, raw STRING, eventts TIMESTAMP, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING)
+(ts TIMESTAMP, raw STRING, eventts TIMESTAMP, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING, outlier INT)
 PARTITIONED BY (hour BIGINT)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE;

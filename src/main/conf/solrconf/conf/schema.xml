@@ -112,6 +112,7 @@
    <field name="srcport" type="int" indexed="true" stored="true"/>
    <field name="dstport" type="int" indexed="true" stored="true"/>
    <field name="proto" type="string" indexed="true" stored="true" />
+   <field name="outlier" type="int" indexed="true" stored="true" />
    <field name="raw" type="string" indexed="false" stored="true" />
    <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
    <field name="_version_" type="long" indexed="true" stored="true"/>

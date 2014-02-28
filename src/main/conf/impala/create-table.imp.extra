@@ -6,7 +6,7 @@ CREATE DATABASE cis;
 USE cis;
 
 CREATE TABLE records 
-(ts TIMESTAMP, raw STRING, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING)
+(ts TIMESTAMP, raw STRING, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING, outlier INT)
 PARTITIONED BY (hour BIGINT)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE;
@@ -21,7 +21,7 @@ USE cis;
 --had to copy parquet-mr and parquet-format jars to hive lib dir as per https://issues.cloudera.org/browse/IMPALA-574
 --have to change ts to BIGINT instead of TIMESTAMP because the parquet-hive-1.2.2.jar file can't handle the timestamp data type
 CREATE TABLE records 
-(ts TIMESTAMP, raw STRING, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING)
+(ts TIMESTAMP, raw STRING, type STRING, verb STRING, resource STRING, code INT, len INT, srcip STRING, dstip STRING, srcport INT, dstport INT, proto STRING, outlier INT)
 PARTITIONED BY (year INT, month INT, day INT)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS SEQUENCEFILE;
