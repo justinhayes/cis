@@ -71,8 +71,8 @@ In Oryx, there is also the option to automatically rebuild the model as new data
 as the amount of data it is exposed to grows. This is accomplished via a scheduled job that copies live data into the Oryx training data directory, initiating
 a model rebuilding process. Once the model is rebuilt it automatically replaces the prior model in serving real-time requests.
 
-To get the Oryx binaries, follow the directions at https://github.com/cloudera/oryx/wiki/Building-from-Source. For convenience, there are a version of the two
-required libraries in the oryx/ directory. The src/main/conf/oryx/ directory contains the oryx config file that is used for the computation and serving layers.
+To get the Oryx binaries, follow the directions at https://github.com/cloudera/oryx/wiki/Building-from-Source. 
+The src/main/conf/oryx/ directory contains the oryx config file that is used for the computation and serving layers.
 It can be modified as necessary (e.g. to change the model.instance-dir or the k-means++ parameters) for a given deployment. Follow the instructions at 
 https://github.com/cloudera/oryx/wiki/Installation for information on Hadoop configuration.
 
