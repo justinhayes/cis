@@ -1,7 +1,7 @@
 Introduction
 ===========
 The Cloudera InfoSec Solution (CIS) is a reference architecture for integrating several Hadoop ecosystem components
-together into a system that can be used for InfoSec use cases. It provides the following high level features:
+together into a system that can be used for anomaly detection use cases. It provides the following high level features:
 - Low latency SQL
 - Search
 - Streaming and Historical Visualizations
@@ -26,14 +26,13 @@ At a high level, the flow of data through the system is as follows:
 
 1. Data arrives as log files in a log directory (the datadriver.py script populates these log files with synthetic data)
 2. A Flume agent reads the log file data, parses it, normalizes it, and 
-    - writes it to HDFS, and 
-    - indexes it in Cloudera Search, and
     - queries the Oryx serving layer to determine if this event represents an anomaly
+    - indexes it in Cloudera Search, and
+    - writes it to HDFS, and 
 3. A partitioned Impala table is defined over the HDFS data, enabling SQL querying
 4. Cloudera Search provides search on the indexed event data
-5. Oryx uses the event data to periodically update its model [TBD]
-6. ZoomData provides historical and streaming visualization of the data via Cloudera Impala and Search [TBD]
-7. ZoomData provides near real time alerting of events flagged as anomalous [TBD]
+5. ZoomData provides historical and streaming visualization of the data, including flagged anomalies, via Cloudera Impala and Search
+6. Oryx uses the event data to periodically update its model [TODO]
 
 
 Getting Started
@@ -71,8 +70,8 @@ In Oryx, there is also the option to automatically rebuild the model as new data
 as the amount of data it is exposed to grows. This is accomplished via a scheduled job that copies live data into the Oryx training data directory, initiating
 a model rebuilding process. Once the model is rebuilt it automatically replaces the prior model in serving real-time requests.
 
-To get the Oryx binaries, follow the directions at https://github.com/cloudera/oryx/wiki/Building-from-Source. 
-The src/main/conf/oryx/ directory contains the oryx config file that is used for the computation and serving layers.
+To get the Oryx binaries, follow the directions at https://github.com/cloudera/oryx/wiki/Building-from-Source. There is a copy of these jars in the oryx directory
+for convenienve, but it is better to build your own. The src/main/conf/oryx/ directory contains the oryx config file that is used for the computation and serving layers.
 It can be modified as necessary (e.g. to change the model.instance-dir or the k-means++ parameters) for a given deployment. Follow the instructions at 
 https://github.com/cloudera/oryx/wiki/Installation for information on Hadoop configuration.
 
@@ -91,7 +90,7 @@ The computation layer will output a "Signaling completion of generation 0" messa
     $> sh $CIS_HOME/bin/comp-kmeans.sh
     $> sh $CIS_HOME/bin/serv-kmeans.sh
     $> flume-ng agent -c $CIS_HOME/conf/flume -f $CIS_HOME/conf/flume/flume.conf -n cis
-    $> python $CIS_HOME/bin/datadriver.py -yhttpd -t100
+    $> python $CIS_HOME/bin/datadriver.py -t1000 -m102400
 ```
 
 These processes should be run in the background for anything other than development environments. 
@@ -99,7 +98,7 @@ Additionally, multiple instances of the datadriver.py script can be run (one per
 of event data. Run 'python $CIS_HOME/bin/datadriver.py -h' for script options.
 
 Once these processes are running, you can run Impala queries and Solr searches via Hue, at http://<host>:8888. You can also 
-view the ZoomData visualizations at http://<host>:????.
+view the ZoomData visualizations at http://<host>/zoomdata/index.html (once you configure ZoomData to connect to CDH; see below for that).
 
  
 ZoomData Configuration
@@ -117,7 +116,7 @@ The *zoomdata* account has sudo permissions and its password is *zoomdata*.
 
 
 
-Securing your Hadoop Cluster (TBD - these are incomplete and probably incorrect)
+Securing your Hadoop Cluster (TBD - these are incomplete and probably incorrect, but are kept here for future reference when this part is picked up again)
 ----------------------------
 Configure Hadoop security to secure the CDH cluster.
 

@@ -5,7 +5,7 @@ package/
 .settings
 .pydevproject
 *.class
-*.jar
+#*.jar
 *.war
 *.ear
 src/main/scripts/data/.DS_Store
