@@ -145,22 +145,22 @@ Securing your Hadoop Cluster (TBD - these are incomplete and probably incorrect,
 Configure Hadoop security to secure the CDH cluster.
 
 1. On the server that acts as the Kerberos Key Distribution Center, or KDC (this can be the name node if it's not on a separate server):
-    a. yum install krb5-server krb5-libs krb5-auth-dialog
-    b. vim /etc/krb5.conf (change EXAMPLE.COM and example.com to your domain, maintaining capitalization; change kerberos.example.com to the FQDN of this server, set ticket_lifetime and renew_lifetime to 365d)
-    c. kdb5_util create -s (enter in the password for the KDC master key)
-    d. vim /var/kerberos/krb5kdc/kadm5.acl (change EXAMPLE.COM to your domain, maintaining capitalization)
-    e. vim /var/kerberos/krb5kdc/kdc.conf (add 'max_renewable_life = 7d' line to the [realms] section; change EXAMPLE.COM and example.com to your domain, maintaining capitalization) ???
-    f. service krb5kdc start
-    g. service kadmin start
-    h. Copy /etc/krb5.conf to all nodes in the cluster, placing it in the /etc directory
-    i. Install the unlimited strength JCE policy as per http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM4Ent/latest/Configuring-Hadoop-Security-with-Cloudera-Manager/cmchs_JCE_policy_s4.html
-    j. (do after turning on hadoop security via CM) kadmin.local ???
-        *modprinc -maxrenewlife 90day krbtgt/YOUR_REALM ???
-        *modprinc -maxrenewlife 90day +allow_renewable hue/[fqdn_for_kdc_server] ???
-    k. Make nodes a gateway for MapReduce1 so they get the updated /etc/hadoop.conf; then "Deploy Client Configurations" ???
+    1. yum install krb5-server krb5-libs krb5-auth-dialog
+    2. vim /etc/krb5.conf (change EXAMPLE.COM and example.com to your domain, maintaining capitalization; change kerberos.example.com to the FQDN of this server, set ticket_lifetime and renew_lifetime to 365d)
+    3. kdb5_util create -s (enter in the password for the KDC master key)
+    4. vim /var/kerberos/krb5kdc/kadm5.acl (change EXAMPLE.COM to your domain, maintaining capitalization)
+    5. vim /var/kerberos/krb5kdc/kdc.conf (add 'max_renewable_life = 7d' line to the [realms] section; change EXAMPLE.COM and example.com to your domain, maintaining capitalization) ???
+    6. service krb5kdc start
+    7. service kadmin start
+    8. Copy /etc/krb5.conf to all nodes in the cluster, placing it in the /etc directory
+    9. Install the unlimited strength JCE policy as per http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM4Ent/latest/Configuring-Hadoop-Security-with-Cloudera-Manager/cmchs_JCE_policy_s4.html
+    10. (do after turning on hadoop security via CM) kadmin.local ???
+        * modprinc -maxrenewlife 90day krbtgt/YOUR_REALM ???
+        * modprinc -maxrenewlife 90day +allow_renewable hue/[fqdn_for_kdc_server] ???
+    11. Make nodes a gateway for MapReduce1 so they get the updated /etc/hadoop.conf; then "Deploy Client Configurations" ???
 2. On each node in the cluster:
-    a. yum install krb5-workstation krb5-libs krb5-auth-dialog
-    b. Install the unlimited strength JCE policy as per http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM4Ent/latest/Configuring-Hadoop-Security-with-Cloudera-Manager/cmchs_JCE_policy_s4.html
+    1. yum install krb5-workstation krb5-libs krb5-auth-dialog
+    2. Install the unlimited strength JCE policy as per http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM4Ent/latest/Configuring-Hadoop-Security-with-Cloudera-Manager/cmchs_JCE_policy_s4.html
 
 For more information on installing/configuring Kerberos, see https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Managing_Smart_Cards/Configuring_a_Kerberos_5_Server.html
 
