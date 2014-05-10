@@ -17,8 +17,8 @@ The core components of the solution are as follows:
 - Cloudera Impala
 - Cloudera Search
 - Cloudera Oryx
-- ZoomData
 - Apache Hue
+- ZoomData
 
 ---
 
