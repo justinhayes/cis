@@ -38,24 +38,41 @@ At a high level, the flow of data through the system is as follows:
 Getting Started
 ---------------
 To install the CIS, you must have a CDH cluster, with the above components (and their dependencies) all running
-and fully functional. Then, follow these steps:  
+and fully functional. Then, follow these steps to install CIS onto one of the servers in the cluster. This server
+must have the Hadoop client configurations deployed to it so it can use HDFS, run the impala shell, run a flume agent, and run Oryx:  
 
 NOTE: if running in the quickstart VM or any server that doesn't use the Oracle JDK by default, make sure that the JVM variable in 
 */usr/lib/solr/bin/zkcli.sh* resolves to the Oracle JDK instead of the GNU jvm. 
 Do this by commenting out the existing **JVM="java"** line and adding **JVM=/usr/java/jdk1.6.0_32/bin/java** below it.
 
-1. Create a directory to install CIS to; this directory is referred to as $CIS_HOME (no need to create the env var though)
-    - Ensure that the paths in src/main/conf/flume/flume.conf and the scripts in src/main/scripts match the directory you just created
+1. Create a directory on the target server to install CIS to; this directory is referred to as $CIS_HOME (no need to create the env var though)
+    - Ensure that the scripts in src/main/scripts match the directory you just created
     - Ensure that the ZK_QUORUM property in src/main/scripts/install.sh and init-hadoop.sh is correct for your cluster
 2. Build the CIS jar file via: mvn clean install
-3. Copy the src directory and target/cis-0.0.1-SNAPSHOT.jar into a local directory called 'package', tar it, and copy it to the $CIS_HOME on the server
+3. Copy the src, oryx, and data directories, as well as target/cis-0.0.1-SNAPSHOT.jar into a local directory called 'package', tar it, and copy it to the $CIS_HOME on the server
 4. Untar the package tar file in the $CIS_HOME directory 
 5. Run the $CIS_HOME/package/src/main/scripts/install.sh script, which will:
-    - Create required directories, all underneath $CIS_HOME
+    - Create required directories underneath $CIS_HOME and /var/lib/flume-ng
     - Copy the config files, scripts, and other files into the appropriate directories
     - Initialize Cloudera Search and copy the Solr config files into the appropriate place under $CIS_HOME/conf/solrconf
     - Create the Impala table and pre-create the required partitions
     - Initializes HDFS for use by Oryx and copies the sample clustering training data to the correct location
+
+
+Flume Configuration
+-------------------
+Make sure that the flume service is installed via CM and that the flume agent role is running only on the node in which you are installing everything.
+If you want the flume agent to run on all nodes, do the "Initial flume setup" steps from install.sh on each node. To configure and start Flume, do the following:
+
+1. In CM, go to Services->flume1; then Configuration->View and Edit
+2. Click on "Agent (Default)" on the left
+3. Copy the contents of flume.conf into the Configuration File field
+4. Enter "cis" in the Agent Name field
+5. Ensure that /var/lib/flume-ng/plugins.d is one of the items in the Plugin directories value
+6. Click "Save Changes"
+7. Click Actions->Start (or Restart if already running) in the top right button to start the service
+
+You can monitor the flume agent log files via CM or via /var/log/flume-ng/flume-cmf-flume1-AGENT-hadoop0.cloudera.com.log.
 
 
 Oryx Configuration
@@ -84,17 +101,22 @@ Running the Solution
 --------------------
 To run the application, ensure that all CDH services are operating normally and then enter the following commands, each in its own shell.
 If this is the first time that the system has been run, wait until the Oryx computation layer (command 1) has completed building its model 
-before turning on the data driver (command 4). This can take up to several 10s of minutes or more.
+before turning on the data driver. This can take up to several 10s of minutes or more.
 The computation layer will output a "Signaling completion of generation 0" message when it is finished.
 ```
+	# Make sure the flume agents are running in CM
     $> sh $CIS_HOME/bin/comp-kmeans.sh
     $> sh $CIS_HOME/bin/serv-kmeans.sh
-    $> flume-ng agent -c $CIS_HOME/conf/flume -f $CIS_HOME/conf/flume/flume.conf -n cis
-    $> python $CIS_HOME/bin/datadriver.py -t1000 -m102400
+    $> python $CIS_HOME/bin/datadriver.py -yhttpd -t1000 -m102400
+    # kill the process via ctrl-c after it has created a few files
+    $> python $CIS_HOME/bin/datadriver.py -yiptables -t1000 -m102400
+    # kill the process via ctrl-c after it has created a few files
+    $> python $CIS_HOME/bin/datadriver.py -ykdd -t1000 -m102400
+    # kill the process via ctrl-c after it has created a few files
 ```
 
-These processes should be run in the background for anything other than development environments. 
-Additionally, multiple instances of the datadriver.py script can be run (one per type) to generate each type
+These processes would be run in the background for anything other than development environments. 
+Additionally, multiple instances of the datadriver.py script can be run at the same time (one per type) to generate each type
 of event data. Run 'python $CIS_HOME/bin/datadriver.py -h' for script options.
 
 Once these processes are running, you can run Impala queries and Solr searches via Hue, at http://<host>:8888. You can also 
@@ -103,6 +125,8 @@ view the ZoomData visualizations at http://<host>/zoomdata/index.html (once you 
  
 ZoomData Configuration
 ----------------------
+Note: This configuration is incomplete and likely outdated.
+
 If using the ZoomData quickstart VM, you must install NTP to make sure that the clock is synchronized to the CDH cluster and that it uses US/Pacific timezone.
 The *zoomdata* account has sudo permissions and its password is *zoomdata*.
 
